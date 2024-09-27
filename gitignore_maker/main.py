@@ -1,5 +1,6 @@
 import os
 import sys
+from constants import language_gitignore_map
 
 # Set your size limit in bytes (e.g., 10 MB)
 SIZE_LIMIT = 10 * 1024 * 1024  # 10 MB
@@ -128,7 +129,43 @@ def check_file_sizes(directory, gitignore_entries, ignore_folder):
                 print(f"Error checking {file_path}: {e}")
 
 
+def get_gitignore_content(language_name: str, language_gitignore_map: dict) -> str:
+    # Look up the language in the map
+    if language_name in language_gitignore_map:
+        file_path = language_gitignore_map[language_name]
+
+        # Return the content of the gitignore file
+        with open(file_path, "r") as file:
+            content = file.read()
+        return content
+    else:
+        return f"Error: No .gitignore file found for {language_name}."
+
+
 def gitignore_maker():
+    create_gitignore_if_not_exists()  # Create .gitignore if it doesn't exist
+
+    # Load existing .gitignore entries
+    gitignore_entries_raw = load_gitignore_entries()
+
+    # Get the language-specific .gitignore content (for example, Python)
+    language_gitignore_content = get_gitignore_content("Python", language_gitignore_map)
+    language_gitignore_lines = language_gitignore_content.splitlines()
+
+    # Combine raw entries and language-specific entries, removing duplicates
+    unique_entries = set(gitignore_entries_raw + language_gitignore_lines)
+
+    # Clear the current .gitignore
+    with open(GITIGNORE_PATH, "w") as gitignore:
+        gitignore.write("# .gitignore\n")  # Optional: add a comment header
+
+    # Write back the unique entries
+    with open(GITIGNORE_PATH, "a") as gitignore:
+        for entry in unique_entries:
+            gitignore.write(f"{entry}\n")
+
+    print(f"Updated {GITIGNORE_PATH} with combined content.")
+
     ignore_folders = []  # Add folder names here
     ignore_files = ["file_to_ignore.txt"]  # Add file names here
 
@@ -142,17 +179,13 @@ def gitignore_maker():
             sys.exit(1)  # Exit the program with a non-zero exit code
 
     ignore_folders.append(".git")
-    create_gitignore_if_not_exists()  # Create .gitignore if it doesn't exist
 
-    gitignore_entries_raw = load_gitignore_entries()  # Load existing .gitignore entries
-    gitignore_entries = structure_gitignore_entries(
-        gitignore_entries_raw
-    )  # Structure entries
+    # Structure existing gitignore entries
+    gitignore_entries = structure_gitignore_entries(gitignore_entries_raw)
 
-    check_file_sizes(
-        ".", gitignore_entries, ignore_folder
-    )  # Run the check on the current directory
+    # Run the file size check on the current directory
+    check_file_sizes(".", gitignore_entries, ignore_folder)
 
 
-# if __name__ == "__main__":
-#     gitignore_maker()
+if __name__ == "__main__":
+    gitignore_maker()
