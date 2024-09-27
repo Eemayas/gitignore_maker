@@ -1,8 +1,10 @@
-import os
+import argparse
 import sys
+import os
+from gitignore_maker.constants import language_gitignore_map
 
-# Set your size limit in bytes (e.g., 10 MB)
-SIZE_LIMIT = 10 * 1024 * 1024  # 10 MB
+# Set a default size limit (e.g., 49 MB)
+DEFAULT_SIZE_LIMIT = 49 * 1024 * 1024  # 49 MB
 GITIGNORE_PATH = ".gitignore"
 
 
@@ -65,8 +67,7 @@ def is_parent_in_gitignore(folder_path, gitignore_entries):
     return False
 
 
-def check_folder_size(folder_path, gitignore_entries, ignore_folder):
-    # Skip folder if it's already in .gitignore
+def check_folder_size(folder_path, gitignore_entries, ignore_folder, size_limit):
     if folder_path in gitignore_entries["folders"]:
         print(f"Skipping {folder_path}, already in .gitignore")
         return True
@@ -89,7 +90,7 @@ def check_folder_size(folder_path, gitignore_entries, ignore_folder):
 
     if len(files_in_folder) > 1:
         oversized_files = [
-            f for f in files_in_folder if os.path.getsize(f) > SIZE_LIMIT
+            f for f in files_in_folder if os.path.getsize(f) > size_limit
         ]
         if len(oversized_files) == len(files_in_folder):
             # If all files in the folder exceed the limit, add the folder to .gitignore
@@ -98,13 +99,14 @@ def check_folder_size(folder_path, gitignore_entries, ignore_folder):
     return False
 
 
-def check_file_sizes(directory, gitignore_entries, ignore_folder):
+def check_file_sizes(directory, gitignore_entries, ignore_folder, size_limit):
     for root, dirs, files in os.walk(directory):
         # Check each folder first
         for dir_name in dirs:
             folder_path = os.path.join(root, dir_name)
-            if check_folder_size(folder_path, gitignore_entries, ignore_folder):
-                # Skip checking this folder if it's already in .gitignore
+            if check_folder_size(
+                folder_path, gitignore_entries, ignore_folder, size_limit
+            ):
                 dirs.remove(dir_name)
                 continue
 
@@ -122,37 +124,106 @@ def check_file_sizes(directory, gitignore_entries, ignore_folder):
                 continue
 
             try:
-                if os.path.getsize(file_path) > SIZE_LIMIT:
+                if os.path.getsize(file_path) > size_limit:
                     add_to_gitignore(file_path)
             except Exception as e:
                 print(f"Error checking {file_path}: {e}")
 
 
-def gitignore_maker():
-    ignore_folders = []  # Add folder names here
-    ignore_files = ["file_to_ignore.txt"]  # Add file names here
+def get_gitignore_content(language_name: str, language_gitignore_map: dict) -> str:
+    # Look up the language in the map
+    if language_name in language_gitignore_map:
+        file_path = language_gitignore_map[language_name]
 
-    # Combine ignore_folders and ignore_files for checking
-    ignore_folder = ignore_folders + ignore_files
-
-    # Check if each ignore folder exists
-    for folder in ignore_folders:
-        if not os.path.exists(folder):
-            print(f"{folder} does not exist. Exiting...")
-            sys.exit(1)  # Exit the program with a non-zero exit code
-
-    ignore_folders.append(".git")
-    create_gitignore_if_not_exists()  # Create .gitignore if it doesn't exist
-
-    gitignore_entries_raw = load_gitignore_entries()  # Load existing .gitignore entries
-    gitignore_entries = structure_gitignore_entries(
-        gitignore_entries_raw
-    )  # Structure entries
-
-    check_file_sizes(
-        ".", gitignore_entries, ignore_folder
-    )  # Run the check on the current directory
+        # Return the content of the gitignore file
+        with open(file_path, "r") as file:
+            content = file.read()
+        return content
+    else:
+        return f"Error: No .gitignore file found for {language_name}."
 
 
-# if __name__ == "__main__":
-#     gitignore_maker()
+def gitignore_maker(languages):
+    create_gitignore_if_not_exists()
+    gitignore_entries_raw = load_gitignore_entries()
+
+    combined_language_entries = set()
+    for lang in languages:
+        language_gitignore_content = get_gitignore_content(lang, language_gitignore_map)
+        combined_language_entries.update(language_gitignore_content.splitlines())
+
+    unique_entries = set(gitignore_entries_raw + list(combined_language_entries))
+
+    # Clear the current .gitignore
+    with open(GITIGNORE_PATH, "w") as gitignore:
+        gitignore.write("# .gitignore\n")
+    with open(GITIGNORE_PATH, "a") as gitignore:
+        for entry in unique_entries:
+            gitignore.write(f"{entry}\n")
+
+    print(f"Updated {GITIGNORE_PATH} with combined content.")
+
+
+def list_languages():
+    # Simply print out the list of available languages from the `language_gitignore_map`
+    print("Supported languages:")
+    for language in language_gitignore_map:
+        print(f"- {language}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="A CLI tool to manage .gitignore files with language templates and size-based filtering."
+    )
+    parser.add_argument(
+        "--languages",
+        nargs="+",
+        help="Specify the programming languages to include in the .gitignore (e.g., --languages Python Node).",
+        required=False,
+        default=[],
+    )
+    parser.add_argument(
+        "--size-limit",
+        type=int,
+        help="Set the size limit for files in bytes. Files larger than this will be added to .gitignore.",
+        default=DEFAULT_SIZE_LIMIT,
+    )
+    parser.add_argument(
+        "--ignore-folders",
+        nargs="+",
+        help="Specify folders to ignore during file size checks (e.g., --ignore-folders venv node_modules).",
+        default=[],
+    )
+    parser.add_argument(
+        "--ignore-files",
+        nargs="+",
+        help="Specify files to ignore during file size checks (e.g., --ignore-files large_file.txt).",
+        default=[],
+    )
+    parser.add_argument(
+        "--list-languages",
+        action="store_true",
+        help="List all supported languages and exit.",
+    )
+
+    args = parser.parse_args()
+
+    # If the --list-languages flag is provided, list languages and exit immediately
+    if args.list_languages:
+        list_languages()
+        sys.exit(0)  # Exit immediately after listing languages
+
+    # Continue with other logic if --list-languages is not provided
+    size_limit = args.size_limit
+
+    gitignore_maker(args.languages)
+
+    ignore_folder = args.ignore_folders + args.ignore_files
+
+    gitignore_entries = structure_gitignore_entries(load_gitignore_entries())
+
+    check_file_sizes(".", gitignore_entries, ignore_folder, size_limit)
+
+
+if __name__ == "__main__":
+    main()

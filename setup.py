@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 
 setup(
     name="gitignore_maker",
-    version="0.1.0",
-    description="A utility to manage .gitignore entries based on file size",
+    version="0.1.1",
+    description="A powerful command-line tool for managing .gitignore files with language-specific templates and size-based filtering. ",
     long_description_content_type="text/markdown",
     long_description=open("README.md").read(),
     author="Eemayas",
@@ -19,7 +19,7 @@ setup(
     install_requires=[],
     entry_points={
         "console_scripts": [
-            "gitignore_maker=gitignore_maker:gitignore_maker",
+            "gitignore_maker=gitignore_maker:main",
         ],
     },
 )
