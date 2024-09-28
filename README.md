@@ -69,7 +69,7 @@ gitignore_maker [OPTIONS]
 
 ## Example Workflow
 
-Here’s a typical workflow using this tool:
+Here i    s a typical workflow using this tool:
 
 1. **Generate a language-specific `.gitignore` file**:
     ```bash

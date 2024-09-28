@@ -19,7 +19,7 @@ setup(
     install_requires=[],
     entry_points={
         "console_scripts": [
-            "gitignore_maker=gitignore_maker:main",
+            "gitignore_maker=gitignore_maker:gitignore_maker",
         ],
     },
 )

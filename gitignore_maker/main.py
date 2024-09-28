@@ -143,27 +143,6 @@ def get_gitignore_content(language_name: str, language_gitignore_map: dict) -> s
         return f"Error: No .gitignore file found for {language_name}."
 
 
-def gitignore_maker(languages):
-    create_gitignore_if_not_exists()
-    gitignore_entries_raw = load_gitignore_entries()
-
-    combined_language_entries = set()
-    for lang in languages:
-        language_gitignore_content = get_gitignore_content(lang, language_gitignore_map)
-        combined_language_entries.update(language_gitignore_content.splitlines())
-
-    unique_entries = set(gitignore_entries_raw + list(combined_language_entries))
-
-    # Clear the current .gitignore
-    with open(GITIGNORE_PATH, "w") as gitignore:
-        gitignore.write("# .gitignore\n")
-    with open(GITIGNORE_PATH, "a") as gitignore:
-        for entry in unique_entries:
-            gitignore.write(f"{entry}\n")
-
-    print(f"Updated {GITIGNORE_PATH} with combined content.")
-
-
 def list_languages():
     # Simply print out the list of available languages from the `language_gitignore_map`
     print("Supported languages:")
@@ -171,7 +150,7 @@ def list_languages():
         print(f"- {language}")
 
 
-def main():
+def gitignore_maker():
     parser = argparse.ArgumentParser(
         description="A CLI tool to manage .gitignore files with language templates and size-based filtering."
     )
@@ -216,7 +195,24 @@ def main():
     # Continue with other logic if --list-languages is not provided
     size_limit = args.size_limit
 
-    gitignore_maker(args.languages)
+    create_gitignore_if_not_exists()
+    gitignore_entries_raw = load_gitignore_entries()
+
+    combined_language_entries = set()
+    for lang in args.languages:
+        language_gitignore_content = get_gitignore_content(lang, language_gitignore_map)
+        combined_language_entries.update(language_gitignore_content.splitlines())
+
+    unique_entries = set(gitignore_entries_raw + list(combined_language_entries))
+
+    # Clear the current .gitignore
+    with open(GITIGNORE_PATH, "w") as gitignore:
+        gitignore.write("# .gitignore\n")
+    with open(GITIGNORE_PATH, "a") as gitignore:
+        for entry in unique_entries:
+            gitignore.write(f"{entry}\n")
+
+    print(f"Updated {GITIGNORE_PATH} with combined content.")
 
     ignore_folder = args.ignore_folders + args.ignore_files
 
@@ -225,5 +221,5 @@ def main():
     check_file_sizes(".", gitignore_entries, ignore_folder, size_limit)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     gitignore_maker()
