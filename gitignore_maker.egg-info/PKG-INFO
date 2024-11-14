@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: gitignore-maker
-Version: 0.1.1
-Summary: A utility to manage .gitignore entries based on file size
+Version: 0.1.2
+Summary: A powerful command-line tool for managing .gitignore files with language-specific templates and size-based filtering. 
 Home-page: https://github.com/Eemayas/gitignore_maker
 Author: Eemayas
 Author-email: prashantmanandhar2002@gmail.com
@@ -83,7 +83,7 @@ gitignore_maker [OPTIONS]
 
 ## Example Workflow
 
-Hereâ€™s a typical workflow using this tool:
+Here i    s a typical workflow using this tool:
 
 1. **Generate a language-specific `.gitignore` file**:
     ```bash

@@ -27,7 +27,7 @@ def load_gitignore_entries():
 def normalize_path(entry):
     """Convert entry to a standardized relative path format."""
     entry = entry.replace("/", "\\")  # Convert to Windows-style backslashes
-    if entry in {"venv", "./venv", ".\\venv"}:  # Specific correction for venv
+    if entry in {"venv", "./venv", ".\\venv", "venv/"}:  # Specific correction for venv
         return ".\\venv"  # Standardize to .\venv
     if not entry.startswith(".\\"):
         entry = ".\\" + entry  # Add leading .\ if not present
@@ -47,11 +47,22 @@ def structure_gitignore_entries(entries):
     return structured_entries
 
 
+def to_gitignore_path(file_path: str) -> str:
+    # Convert to relative path
+    relative_path = os.path.relpath(file_path)
+
+    # Replace backslashes with forward slashes for Git compatibility
+    gitignore_path = relative_path.replace("\\", "/")
+
+    return gitignore_path
+
+
 def add_to_gitignore(item):
+    print(to_gitignore_path(item))
     # Add item (file/folder) to .gitignore
     with open(GITIGNORE_PATH, "a") as gitignore:
-        gitignore.write("\n" + item)
-    print(f"Added {item} to .gitignore")
+        gitignore.write("\n" + to_gitignore_path(item))
+    print(f"Added {to_gitignore_path(item)} to .gitignore")
 
 
 def is_parent_in_gitignore(folder_path, gitignore_entries):
@@ -221,5 +232,5 @@ def gitignore_maker():
     check_file_sizes(".", gitignore_entries, ignore_folder, size_limit)
 
 
-# if __name__ == "__main__":
-#     gitignore_maker()
+if __name__ == "__main__":
+    gitignore_maker()

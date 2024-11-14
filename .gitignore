@@ -1,1 +1,409 @@
 # .gitignore
+
+# Celery stuff
+venv.bak/
+.eggs/
+ENV/
+#   For a library or package, you might want to ignore these files since the code is
+# Jupyter Notebook
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+.dmypy.json
+# Scrapy stuff:
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+*.cover
+wheels/
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+# Installer logs
+.hypothesis/
+# Django stuff:
+share/python-wheels/
+*.egg
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+# Environments
+*.mo
+pip-delete-this-directory.txt
+docs/_build/
+__pycache__/
+# Unit test / coverage reports
+target/
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+.coverage.*
+.venv
+venv/
+#.idea/
+*.pot
+# PyBuilder
+# Distribution / packaging
+.spyderproject
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+/site
+eggs/
+develop-eggs/
+# PyCharm
+# poetry
+# C extensions
+# PyInstaller
+.env
+db.sqlite3-journal
+.Python
+#Pipfile.lock
+pip-log.txt
+.pdm-python
+*$py.class
+# Byte-compiled / optimized / DLL files
+# Flask stuff:
+db.sqlite3
+#   in version control.
+.pyre/
+var/
+.installed.cfg
+*.egg-info/
+*.manifest
+#   commonly ignored for libraries.
+#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
+#pdm.lock
+lib/
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+env/
+cover/
+*.so
+htmlcov/
+dmypy.json
+.spyproject
+profile_default/
+.pytest_cache/
+build/
+sdist/
+#   install all needed dependencies.
+.tox/
+nosetests.xml
+.ipynb_checkpoints
+coverage.xml
+dist/
+# .gitignore
+.pdm.toml
+# Sphinx documentation
+# Translations
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+# pytype static type analyzer
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+# pdm
+# mypy
+.pybuilder/
+# mkdocs documentation
+#   intended to run in multiple environments; otherwise, check them in:
+.webassets-cache
+# SageMath parsed files
+# Spyder project settings
+*.log
+.ropeproject
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+celerybeat-schedule
+.pytype/
+instance/
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+*.sage.py
+cython_debug/
+__pypackages__/
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+MANIFEST
+.nox/
+celerybeat.pid
+# Cython debug symbols
+local_settings.py
+# Pyre type checker
+lib64/
+.pdm-build/
+# .python-version
+.mypy_cache/
+*.py[cod]
+*.py,cover
+#  Usually these files are written by a python script from a template
+# Rope project settings
+# pyenv
+.scrapy
+downloads/
+ipython_config.py
+datas/raw.txt
+#poetry.lock
+# pipenv
+# IPython
+*.spec
+env.bak/
+.coverage
+.cache
+parts/
+
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+# Byte-compiled / optimized / DLL files
+# Cython debug symbols
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+# pytype static type analyzer
+.hypothesis/
+.pybuilder/
+dist/
+# pyenv
+.scrapy
+# Flask stuff:
+.venv
+# .gitignore
+# pdm
+parts/
+.spyproject
+.ropeproject
+*.py,cover
+.spyderproject
+celerybeat-schedule
+# Jupyter Notebook
+# Environments
+# mypy
+env.bak/
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+docs/_build/
+wheels/
+*$py.class
+lib/
+.cache
+.coverage.*
+celerybeat.pid
+develop-eggs/
+cover/
+.Python
+*.log
+nosetests.xml
+/site
+build/
+*.py[cod]
+#   in version control.
+#pdm.lock
+# Scrapy stuff:
+htmlcov/
+env/
+# Unit test / coverage reports
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+# Celery stuff
+*.sage.py
+# Rope project settings
+ipython_config.py
+pip-delete-this-directory.txt
+.installed.cfg
+downloads/
+*.egg-info/
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+lib64/
+.webassets-cache
+*.manifest
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+venv/
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+__pycache__/
+# C extensions
+# Translations
+# PyInstaller
+# PyCharm
+profile_default/
+.pyre/
+.tox/
+.ipynb_checkpoints
+# Sphinx documentation
+#  Usually these files are written by a python script from a template
+MANIFEST
+# PyBuilder
+# Distribution / packaging
+#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
+coverage.xml
+# pipenv
+*.cover
+# Spyder project settings
+*.so
+#   For a library or package, you might want to ignore these files since the code is
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+.dmypy.json
+.env
+*.mo
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+.coverage
+.pdm.toml
+# .python-version
+datas/raw.txt
+sdist/
+#poetry.lock
+#   install all needed dependencies.
+*.egg
+# poetry
+.pytype/
+*.spec
+.mypy_cache/
+db.sqlite3
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+ENV/
+*.pot
+# Installer logs
+__pypackages__/
+# SageMath parsed files
+target/
+local_settings.py
+.pytest_cache/
+.eggs/
+var/
+dmypy.json
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+# IPython
+eggs/
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+db.sqlite3-journal
+instance/
+# Pyre type checker
+share/python-wheels/
+.pdm-python
+.nox/
+# Django stuff:
+#.idea/
+# mkdocs documentation
+#   intended to run in multiple environments; otherwise, check them in:
+.pdm-build/
+venv.bak/
+cython_debug/
+pip-log.txt
+#   commonly ignored for libraries.
+#Pipfile.lock
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+
+env.bak/
+cover/
+db.sqlite3-journal
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+.venv
+.pyre/
+*.spec
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+# Pyre type checker
+# PyInstaller
+# pdm
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+# .gitignore
+# Unit test / coverage reports
+.Python
+db.sqlite3
+.mypy_cache/
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+lib64/
+# pipenv
+__pypackages__/
+.eggs/
+*.mo
+# Installer logs
+.pytest_cache/
+#   intended to run in multiple environments; otherwise, check them in:
+pip-delete-this-directory.txt
+*.py,cover
+share/python-wheels/
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#  Usually these files are written by a python script from a template
+build/
+*.sage.py
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+cython_debug/
+target/
+ENV/
+.pdm-build/
+MANIFEST
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+# Spyder project settings
+.hypothesis/
+.coverage.*
+lib/
+*.log
+env/
+.spyproject
+ipython_config.py
+.pytype/
+#.idea/
+nosetests.xml
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+# Byte-compiled / optimized / DLL files
+datas/raw.txt
+# Cython debug symbols
+# Scrapy stuff:
+htmlcov/
+# SageMath parsed files
+pip-log.txt
+sdist/
+# Rope project settings
+.pybuilder/
+var/
+# C extensions
+*.manifest
+venv/
+profile_default/
+#   For a library or package, you might want to ignore these files since the code is
+# Django stuff:
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+# Translations
+#   install all needed dependencies.
+.nox/
+#   commonly ignored for libraries.
+# Celery stuff
+*.egg
+#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+# .python-version
+*.so
+# pyenv
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+# mypy
+.env
+# Flask stuff:
+celerybeat-schedule
+# Distribution / packaging
+dmypy.json
+#poetry.lock
+.installed.cfg
+*$py.class
+develop-eggs/
+.pdm-python
+.pdm.toml
+.spyderproject
+.ipynb_checkpoints
+*.pot
+# Environments
+docs/_build/
+.ropeproject
+parts/
+eggs/
+/site
+#Pipfile.lock
+# pytype static type analyzer
+downloads/
+# Jupyter Notebook
+.cache
+# Sphinx documentation
+# mkdocs documentation
+venv.bak/
+__pycache__/
+#pdm.lock
+celerybeat.pid
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+# PyCharm
+.coverage
+.webassets-cache
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+*.egg-info/
+.tox/
+*.py[cod]
+coverage.xml
+*.cover
+#   in version control.
+local_settings.py
+# PyBuilder
+.scrapy
+wheels/
+instance/
+# IPython
+.dmypy.json
+dist/

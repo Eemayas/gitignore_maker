@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="gitignore_maker",
-    version="0.1.1",
+    version="0.1.2",
     description="A powerful command-line tool for managing .gitignore files with language-specific templates and size-based filtering. ",
     long_description_content_type="text/markdown",
     long_description=open("README.md").read(),
