@@ -1,6 +1,7 @@
 import argparse
 import sys
 import os
+import pkg_resources
 from gitignore_maker.constants import language_gitignore_map
 
 # Set a default size limit (e.g., 49 MB)
@@ -144,7 +145,13 @@ def check_file_sizes(directory, gitignore_entries, ignore_folder, size_limit):
 def get_gitignore_content(language_name: str, language_gitignore_map: dict) -> str:
     # Look up the language in the map
     if language_name in language_gitignore_map:
-        file_path = language_gitignore_map[language_name]
+        #     file_path = language_gitignore_map[language_name]
+
+        file_path = pkg_resources.resource_filename(
+            __name__, f"gitignore/{language_gitignore_map[language_name]}"
+        )
+        with open(file_path, "r") as file:
+            return file.read()
 
         # Return the content of the gitignore file
         with open(file_path, "r") as file:
