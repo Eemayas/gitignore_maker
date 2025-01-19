@@ -164,8 +164,8 @@ def get_gitignore_content(language_name: str, language_gitignore_map: dict) -> s
 def list_languages():
     # Simply print out the list of available languages from the `language_gitignore_map`
     print("Supported languages:")
-    for language in language_gitignore_map:
-        print(f"- {language}")
+    for language in sorted(language_gitignore_map.keys()):
+        print(language)
 
 
 def gitignore_maker():
